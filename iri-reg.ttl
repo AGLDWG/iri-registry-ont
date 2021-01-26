@@ -1,0 +1,40 @@
+# baseURI: https://linked.data.gov.au/def/iri-reg
+# imports: http://purl.org/dc/terms/
+# imports: http://purl.org/linked-data/registry
+# imports: http://purl.org/linked-data/version
+# prefix: iri-reg
+
+@prefix iri-reg: <https://linked.data.gov.au/def/iri-reg#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix reg: <http://purl.org/linked-data/registry#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://linked.data.gov.au/def/iri-reg>
+  a owl:Ontology ;
+  rdfs:comment """This ontology is a specialisation of the [Registry Ontology](http://purl.org/linked-data/registry) (REG) used to manage Internationalized Resource Identifiers (IRIs). \"IRI\" is a generalised and more modern name for URIs - Uniform Resource Identifiers.
+
+The major specialisation in this ontology is the subclassing of reg:RegisterItem to iri-reg:IRIRegisterItem which just mandates the use of a few extra properties for IRI management.
+
+Another difference between this ontology and REG is not IRI-specific but a general development: here we define a general mechanism to indicate the date of RegisterItem status changes (from reg:submitted to reg:approved etc.) rather than having status-specific properties such as reg:dateSubmitted & date:approved. This lets all the 11 statueses be used without needing 11 date properties."""@en ;
+  rdfs:label "IRI Registry Ontology" ;
+  owl:imports <http://purl.org/dc/terms/> ;
+  owl:imports <http://purl.org/linked-data/registry> ;
+  owl:imports <http://purl.org/linked-data/version> ;
+.
+iri-reg:IRIRegister
+  a owl:Class ;
+  rdfs:comment "An IRI Register is a Registry Ontology Register used to manage IRIs. For this reason, it has restrictions (requirements) on several properties not present in the Registry Ontology needed to manage IRIs."@en ;
+  rdfs:label "IRI Register" ;
+  rdfs:subClassOf reg:Register ;
+.
+iri-reg:agldwgIriRegister
+  a reg:Register ;
+  reg:manager <https://linked.data.gov.au/org/agldwg> ;
+  reg:owner <https://linked.data.gov.au/org/agldwg> ;
+  rdfs:comment """This particular Register is the Register used by the Australian Government Linked Data Working Group (AGLDWG - see https://www.linked.data.gov.au) to register IRIs using the linked.data.gov.au domain.
+
+IRIs allocated in this domain are intended for use with Linked Data data and applications and are allocated for Australian governments' purposes."""@en ;
+  rdfs:label "AGLDWG IRI Register" ;
+.
