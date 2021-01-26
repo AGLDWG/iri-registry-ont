@@ -1,0 +1,33 @@
+# make dateSubmitted
+PREFIX irireg: <https://linked.data.gov.au/def/irireg#>
+PREFIX reg: <http://purl.org/linked-data/registry#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+CONSTRUCT {
+    ?s reg:dateSubmitted ?t .
+}
+WHERE {
+    ?s irireg:statusPeriod [
+        irireg:hasStatus reg:submitted ;
+        time:hasBeginning [ 
+            time:inXSDDateTime ?t 
+        ] 
+    ]
+}
+
+# make dateAccepted
+PREFIX irireg: <https://linked.data.gov.au/def/irireg#>
+PREFIX reg: <http://purl.org/linked-data/registry#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+CONSTRUCT {
+    ?s reg:dateAccepted ?t .
+}
+WHERE {
+    ?s irireg:statusPeriod [
+        irireg:hasStatus reg:accepted ;
+        time:hasBeginning [ 
+            time:inXSDDateTime ?t 
+        ] 
+    ]
+}
