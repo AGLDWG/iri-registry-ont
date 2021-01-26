@@ -18,11 +18,11 @@
 
 <https://linked.data.gov.au/def/irireg>
   a owl:Ontology ;
-  rdfs:comment """This ontology is a specialisation of the [Registry Ontology](http://purl.org/linked-data/registry) (REG) used to manage Internationalized Resource Identifiers (IRIs). \"IRI\" is a generalised and more modern name for URIs - Uniform Resource Identifiers.
+  rdfs:comment """This ontology is a specialisation of the [Registry Ontology](http://purl.org/linked-data/registry) (REG) used to manage Internationalized Resource Identifiers (IRIs). "IRI" is a generalised and more modern name for URIs - Uniform Resource Identifiers.
 
-The major specialisation in this ontology is the subclassing of reg:RegisterItem to irireg:IRIRegisterItem which just mandates the use of a few extra properties for IRI management.
+The major specialisation in this ontology is the subclassing of reg:RegisterItem to `irireg:RegisteredIRI` which just mandates the use of a few extra properties for IRI management.
 
-Another difference between this ontology and REG is not IRI-specific but a general development: here we define a general mechanism to indicate the date of RegisterItem status changes (from reg:submitted to reg:approved etc.) rather than having status-specific properties such as reg:dateSubmitted & date:approved. This lets all the 11 statueses be used without needing 11 date properties."""@en ;
+Another difference between this ontology and REG is not IRI-specific but a general development: here we define the statuses of `reg:RegisterItem` instances to be held within temporal objects, `irireg:StatusPeriod` instances, sub classes of OWL TIME's `time:ProperInterval` allowing us to stack up multiple, time-bounded, statuses per `irireg:RegisteredIRI`."""@en ;
   rdfs:label "IRI Registry Ontology" ;
   owl:imports dcterms: ;
   owl:imports <http://purl.org/linked-data/registry> ;
