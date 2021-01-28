@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>iri-registry</name>
-	<comment></comment>
+	<name>IRI Registry Ontology</name>
+	<comment>An ontology for managing registries of IRIs</comment>
 	<projects>
 	</projects>
 	<buildSpec>

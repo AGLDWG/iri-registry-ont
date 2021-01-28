@@ -1,13 +1,13 @@
-# baseURI: https://linked.data.gov.au/def/irireg
+# baseURI: https://linked.data.gov.au/def/irg
 # imports: http://purl.org/dc/terms/
 # imports: http://purl.org/linked-data/registry
 # imports: http://purl.org/linked-data/version
 # imports: http://www.w3.org/2006/time
 # imports: http://xmlns.com/foaf/spec/
-# prefix: irireg
+# prefix: irg
 
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix irireg: <https://linked.data.gov.au/def/irireg#> .
+@prefix irg: <https://linked.data.gov.au/def/irg#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -16,13 +16,13 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://linked.data.gov.au/def/irireg>
+<https://linked.data.gov.au/def/irg>
   a owl:Ontology ;
-  rdfs:comment """This ontology is a specialisation of the [Registry Ontology](http://purl.org/linked-data/registry) (REG) used to manage Internationalized Resource Identifiers (IRIs). "IRI" is a generalised and more modern name for URIs - Uniform Resource Identifiers.
+  rdfs:comment """This ontology is a specialisation of the [Registry Ontology](http://purl.org/linked-data/registry) (REG) used to manage Internationalized Resource Identifiers (IRIs). \"IRI\" is a generalised and more modern name for URIs - Uniform Resource Identifiers.
 
-The major specialisation in this ontology is the subclassing of reg:RegisterItem to `irireg:RegisteredIRI` which just mandates the use of a few extra properties for IRI management.
+The major specialisation in this ontology is the subclassing of reg:RegisterItem to `irg:RegisteredIRI` which just mandates the use of a few extra properties for IRI management.
 
-Another difference between this ontology and REG is not IRI-specific but a general development: here we define the statuses of `reg:RegisterItem` instances to be held within temporal objects, `irireg:StatusPeriod` instances, sub classes of OWL TIME's `time:ProperInterval` allowing us to stack up multiple, time-bounded, statuses per `irireg:RegisteredIRI`."""@en ;
+Another difference between this ontology and REG is not IRI-specific but a general development: here we define the statuses of `reg:RegisterItem` instances to be held within temporal objects, `irg:StatusPeriod` instances, sub classes of OWL TIME's `time:ProperInterval` allowing us to stack up multiple, time-bounded, statuses per `irg:RegisteredIRI`."""@en ;
   rdfs:label "IRI Registry Ontology" ;
   owl:imports dcterms: ;
   owl:imports <http://purl.org/linked-data/registry> ;
@@ -30,13 +30,29 @@ Another difference between this ontology and REG is not IRI-specific but a gener
   owl:imports <http://www.w3.org/2006/time> ;
   owl:imports <http://xmlns.com/foaf/spec/> ;
 .
-irireg:IRIRegister
+irg:IRIOwner
+  a owl:Class ;
+  rdfs:comment """An IRI Owner is an Organisation that is requesting, or has requested, an IRI allocation within the IRI Registry.
+
+IRI Owners need to have a specific person play the role of Submitter to actually make the submission.
+
+The rules governing eligibility of Organisations to be IRI Owners for the 'AGLDWG IRI Register' are described in the AGLDWG's Guidelines document, see <https://linked.data.gov.au/guidelines>."""@en ;
+  rdfs:label "IRI Submmitter" ;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Organization> ;
+.
+irg:IRIRedirectTestCase
+  a owl:Class ;
+  rdfs:comment "An IRI Redirect Test Case is an object used to contain the inputs and outputs needed to test the functioning of IRI redirects."@en ;
+  rdfs:label "IRI Redirect Test Case" ;
+  rdfs:subClassOf owl:Thing ;
+.
+irg:IRIRegister
   a owl:Class ;
   rdfs:comment "An IRI Register is a Registry Ontology Register used to manage IRIs. For this reason, it has restrictions (requirements) on several properties not present in the Registry Ontology needed to manage IRIs."@en ;
   rdfs:label "IRI Register" ;
   rdfs:subClassOf reg:Register ;
 .
-irireg:IRIResourceType
+irg:IRIResourceType
   a owl:Class ;
   rdfs:comment """An IRI Resource Type is a type of Resource for which a Registered IRI can be allocated.
 
@@ -44,43 +60,42 @@ Examples of IRI Resource Types include: Definitional Item, Dataset, Top-level Re
   rdfs:label "IRI Resource Type" ;
   rdfs:subClassOf skos:Concept ;
 .
-irireg:IRISubmitter
+irg:IRISubmitter
+  a rdfs:Class ;
   a owl:Class ;
-  rdfs:comment """An IRI Submitter is an Organisation that is requesting, or has requested, an IRI allocation within the IRI Registry.
-
-The rules governing eligibility of Organisations to be IRI Submitters for the 'AGLDWG IRI Register' are described in the AGLDWG's Guidelines document, see <https://linked.data.gov.au/guidelines>."""@en ;
-  rdfs:label "IRI Submmitter" ;
-  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Organization> ;
+  rdfs:comment "An IRI Submitter is a Person that requests an IRI to be allocated within an IRI Registry and does so on behalf of an IRI Owner, which is an Organisation entitled to have IRIs allocated."@en ;
+  rdfs:label "IRI Submitter" ;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person> ;
 .
-irireg:RegisteredIRI
+irg:RegisteredIRI
   a owl:Class ;
   rdfs:comment """A Registered Item that is for an IRI.
 
-It is expected that only IRIs are registered using this class and that the IRI registered is indicated using the property irireg:forIRI."""@en ;
+It is expected that only IRIs are registered using this class and that the IRI registered is indicated using the property irg:forIRI."""@en ;
   rdfs:label "Registered IRI" ;
   rdfs:subClassOf reg:RegisterItem ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty irireg:forIRI ;
+      owl:onProperty irg:forIRI ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty irireg:hasIriRedirectCode ;
+      owl:onProperty irg:hasIriRedirectCode ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty irireg:hasIriResourceType ;
+      owl:onProperty irg:hasIriResourceType ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty irireg:hasIriSubmitter ;
+      owl:onProperty irg:hasIriSubmitter ;
     ] ;
 .
-irireg:StatusPeriod
+irg:StatusPeriod
   a owl:Class ;
   rdfs:comment "A period of time - a time:ProperInterval - during which something has a particular status"@en ;
   rdfs:label "Status Period" ;
@@ -88,17 +103,18 @@ irireg:StatusPeriod
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty irireg:hasStatus ;
+      owl:onProperty irg:hasStatus ;
     ] ;
 .
-irireg:actsFor
+irg:actsFor
   a owl:ObjectProperty ;
   rdfs:comment "This property is used to indicate the Government Organisation that an IRI Submitter is requesting IRI allocations for."@en ;
-  rdfs:domain irireg:IRISubmitter ;
+  rdfs:domain irg:IRISubmitter ;
   rdfs:label "acts for" ;
+  rdfs:range irg:IRIOwner ;
 .
-irireg:agldwgIriRegister
-  a irireg:IRIRegister ;
+irg:agldwgIriRegister
+  a irg:IRIRegister ;
   reg:manager <https://linked.data.gov.au/org/agldwg> ;
   reg:owner <https://linked.data.gov.au/org/agldwg> ;
   rdfs:comment """This particular Register is the Register used by the Australian Government Linked Data Working Group (AGLDWG - see https://www.linked.data.gov.au) to register IRIs using the linked.data.gov.au domain.
@@ -106,26 +122,47 @@ irireg:agldwgIriRegister
 IRIs allocated in this domain are intended for use with Linked Data data and applications and are allocated for Australian governments' purposes."""@en ;
   rdfs:label "AGLDWG IRI Register" ;
 .
-irireg:dataset
-  a irireg:IRIResourceType ;
+irg:dataset
+  a irg:IRIResourceType ;
   dcterms:source "The AGLDWG's Guidelines, see <https://www.linked.data.gov.au/guidelines>" ;
   rdfs:comment "The type of IRI Resource for which IRIs containing /dataset/ are allocated."@en ;
   rdfs:label "Dataset" ;
 .
-irireg:definitionalItem
-  a irireg:IRIResourceType ;
+irg:definitionalItem
+  a irg:IRIResourceType ;
   dcterms:source "The AGLDWG's Guidelines, see <https://www.linked.data.gov.au/guidelines>" ;
   rdfs:comment "The type of IRI Resource for which IRIs containing /def/ are allocated."@en ;
   rdfs:label "Definitional Item" ;
 .
-irireg:forIRI
+irg:forIRI
   a owl:AnnotationProperty ;
   rdfs:comment "This property indicates the thing for which the Registered IRI instance has been created - the IRI that is registered."@en ;
-  rdfs:domain irireg:RegisteredIRI ;
+  rdfs:domain irg:RegisteredIRI ;
   rdfs:label "for IRI" ;
   rdfs:range xsd:anyURI ;
 .
-irireg:hasIriRedirectCode
+irg:fromIRI
+  a owl:DatatypeProperty ;
+  rdfs:comment "This property indicates the input/source IRI that a test case redirect from, to some other IRI."@en ;
+  rdfs:domain irg:IRIRedirectTestCase ;
+  rdfs:label "from IRI" ;
+  rdfs:range xsd:anyURI ;
+.
+irg:hasHttpResponseHeaders
+  a owl:DatatypeProperty ;
+  rdfs:comment "This property indicates any HTTP headers that need to be returned by the redirect service for a successful result in the testing of this Test Case."@en ;
+  rdfs:domain irg:IRIRedirectTestCase ;
+  rdfs:label "HTTP Response Headers" ;
+  rdfs:range xsd:string ;
+.
+irg:hasHttpReqestHeaders
+  a owl:DatatypeProperty ;
+  rdfs:comment "This property indicates any HTTP headers that need to be submitted with the HTTP request to trigger the redirect being testedby this Test Case."@en ;
+  rdfs:domain irg:IRIRedirectTestCase ;
+  rdfs:label "HTTP Request Headers" ;
+  rdfs:range xsd:string ;
+.
+irg:hasIriRedirectCode
   a owl:AnnotationProperty ;
   rdfs:comment """This property indicates the code used to redirect the registered IRI to the functional data or system IRIs.
 
@@ -140,22 +177,22 @@ RewriteRule ^/def/agrif(.*)$        https://raw.githack.com/agldwg/agrif-ont/mas
 RewriteRule ^/def/agrif(.*).ttl$    https://raw.githack.com/agldwg/agrif-ont/master/agrif.ttl [R=302,L]
 RewriteRule ^/def/agrif(.*)$        https://raw.githack.com/agldwg/agrif-ont/master/agrif.html$1 [R=302,L]""" ;
 .
-irireg:hasIriResourceType
+irg:hasIriResourceType
   a owl:ObjectProperty ;
   rdfs:comment "This property indicates one of the IRI Resource Types, listed within this ontology, that a RegisteredIRI is allocated for."@en ;
-  rdfs:domain irireg:RegisteredIRI ;
+  rdfs:domain irg:RegisteredIRI ;
   rdfs:label "IRI resource type" ;
-  rdfs:range irireg:IRIResourceType ;
+  rdfs:range irg:IRIResourceType ;
   rdfs:subPropertyOf dcterms:type ;
 .
-irireg:hasIriSubmitter
+irg:hasIriSubmitter
   a owl:ObjectProperty ;
   rdfs:comment "This property indicates an IRI Submitter Agent that is or has requested IRIs within the AGLDWG IRI Register."@en ;
   rdfs:label "has IRI submitter" ;
-  rdfs:range irireg:IRISubmitter ;
+  rdfs:range irg:IRIOwner ;
   rdfs:subPropertyOf reg:submitter ;
 .
-irireg:hasStatus
+irg:hasStatus
   a owl:AnnotationProperty ;
   rdfs:comment """This property indicates the status held by a Registered IRI within a given period of time, a Status Period.
 
@@ -164,21 +201,28 @@ This property is effectively a sub property of reg:statusb but cannot be so form
   rdfs:label "has status" ;
   rdfs:range reg:Status ;
 .
-irireg:hasStatusPeriod
+irg:hasStatusPeriod
   a owl:ObjectProperty ;
   rdfs:comment "This property indicates a time Status Period, which is a specialised form of time:ProperInterval, that conveys a time-bound status of a Registry Item."@en ;
-  rdfs:domain irireg:RegisteredIRI ;
+  rdfs:domain irg:RegisteredIRI ;
   rdfs:label "has status period" ;
-  rdfs:range irireg:StatusPeriod ;
+  rdfs:range irg:StatusPeriod ;
 .
-irireg:secondLevelRegister
-  a irireg:IRIResourceType ;
+irg:secondLevelRegister
+  a irg:IRIResourceType ;
   dcterms:source "The AGLDWG's Guidelines, see <https://www.linked.data.gov.au/guidelines>" ;
   rdfs:comment "The type of IRI Resource for which modularised subregisters of a Top-Level Register or subregisters of a Dataset are allocated."@en ;
   rdfs:label "Second-Level Register" ;
 .
-irireg:topLevelRegister
-  a irireg:IRIResourceType ;
+irg:toIRI
+  a owl:DatatypeProperty ;
+  rdfs:comment "This property indicates the output/destination IRI that a Test Case redirect to, from some other IRI."@en ;
+  rdfs:domain irg:IRIRedirectTestCase ;
+  rdfs:label "to IRI" ;
+  rdfs:range xsd:anyURI ;
+.
+irg:topLevelRegister
+  a irg:IRIResourceType ;
   dcterms:source "The AGLDWG's Guidelines, see <https://www.linked.data.gov.au/guidelines>" ;
   rdfs:comment "The type of IRI Resource for which IRIs containing a to-level path segment after the PID domain are allocated."@en ;
   rdfs:label "Top-Level Register" ;

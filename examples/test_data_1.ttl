@@ -10,7 +10,7 @@
 
 ex:iri-1
 	a irireg:RegisteredIRI ;
-	irireg:forIRI ""^^xsd:anyURI ;
+	irireg:forIRI "https://linked.data.gov.au/def/eg"^^xsd:anyURI ;
 	irireg:statusPeriod [
         a time:ProperInterval ;
         time:hasBeginning [
