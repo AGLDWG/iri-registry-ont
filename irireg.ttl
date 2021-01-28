@@ -38,7 +38,7 @@ irireg:IRIRegister
 .
 irireg:IRIResourceType
   a owl:Class ;
-  rdfs:comment """An IRI Resource Type is a tpye of Resource for which a Registered IRI can be allocated.
+  rdfs:comment """An IRI Resource Type is a type of Resource for which a Registered IRI can be allocated.
 
 Examples of IRI Resource Types include: Definitional Item, Dataset, Top-level Register, Second-level Register"""@en ;
   rdfs:label "IRI Resource Type" ;
@@ -98,7 +98,7 @@ irireg:actsFor
   rdfs:label "acts for" ;
 .
 irireg:agldwgIriRegister
-  a reg:Register ;
+  a irireg:IRIRegister ;
   reg:manager <https://linked.data.gov.au/org/agldwg> ;
   reg:owner <https://linked.data.gov.au/org/agldwg> ;
   rdfs:comment """This particular Register is the Register used by the Australian Government Linked Data Working Group (AGLDWG - see https://www.linked.data.gov.au) to register IRIs using the linked.data.gov.au domain.
