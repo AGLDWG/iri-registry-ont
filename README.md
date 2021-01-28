@@ -7,7 +7,11 @@ Another difference between this ontology and REG is not IRI-specific but a gener
 
 
 ## Ontology file
-The ontology is constituted as an OWL2 ontology and stored as an RDF (turtle) file [irireg.ttl](irireg.ttl). This ontology will shortly be documented diagramatically and in HTML, when intial development ceases.
+The ontology is constituted as an OWL2 ontology and stored as an RDF (turtle) file [irg.ttl](irg.ttl). This ontology will shortly be documented diagramatically and in HTML, when intial development ceases.
+
+
+## Examples
+Examples of currently registered IRIs in the AGLDWG system are given in the [examples/](examples/) folder.
 
 
 ## License
