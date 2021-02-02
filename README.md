@@ -9,6 +9,10 @@ Another difference between this ontology and REG is not IRI-specific but a gener
 ## Ontology file
 The ontology is constituted as an OWL2 ontology and stored as an RDF (turtle) file [irg.ttl](irg.ttl). This ontology will shortly be documented diagramatically and in HTML, when intial development ceases.
 
+The ontology is documented in HTML, see the `irg.html` file for the source or this rendered version:
+
+* <https://raw.githack.com/AGLDWG/iri-registry-ont/master/irg.ttl>
+
 
 ## Examples
 Examples of currently registered IRIs in the AGLDWG system are given in the [examples/](examples/) folder.
@@ -22,3 +26,7 @@ As per most of the AGLDWG's outputs, this ontology is licensed for use according
 This ontology is authored by the Australian Government Linked Data Working Group itself. See the AGLDWG's contact page to contact particular people:
 
 * <https://www.linked.data.gov.au/contact>
+
+
+## TODO
+* add a property to order the redirect code

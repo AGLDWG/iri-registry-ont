@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>IRI Registry Ontology</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-cp,
+        .sup-cl {
+            cursor:help;
+            margin-left: 3px;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-cp {
+            color:orange;
+        }
+
+        .sup-cl {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "https://linked.data.gov.au/def/irg",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>This ontology is a specialisation of the <a href=\"http://purl.org/linked-data/registry\">Registry Ontology</a> (REG) used to manage Internationalized Resource Identifiers (IRIs). \"IRI\" is a generalised and more modern name for URIs - Uniform Resource Identifiers.</p>\n<p>The major specialisation in this ontology is the subclassing of reg:RegisterItem to <code>irg:RegisteredIRI</code> which just mandates the use of a few extra properties for IRI management.</p>\n<p>Another difference between this ontology and REG is not IRI-specific but a general development: here we define the statuses of <code>reg:RegisterItem</code> instances to be held within temporal objects, <code>irg:StatusPeriod</code> instances, sub classes of OWL TIME's <code>time:ProperInterval</code> allowing us to stack up multiple, time-bounded, statuses per <code>irg:RegisteredIRI</code>.</p>"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "IRI Registry Ontology"
+      }
+    ]
+  }
+]
+    </script>
+</head>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.8.3</span>
+  </div>
+  <h1>IRI Registry Ontology</h1>
+<section id="metadata">
+    <h2 style="display:none;">Metadata</h2>
+    <dl>
+        <dt>URI</dt>
+        <dd><code>https://linked.data.gov.au/def/irg</code></dd>
+        <dt>Imports</dt>
+        <dd>
+            <a href="http://purl.org/dc/terms/">dcterms:</a><br/>
+            <a href="http://purl.org/linked-data/registry">http://purl.org/linked-data/registry</a><br/>
+            <a href="http://purl.org/linked-data/version">http://purl.org/linked-data/version</a><br/>
+            <a href="http://www.w3.org/2006/time">http://www.w3.org/2006/time</a><br/>
+            <a href="http://xmlns.com/foaf/spec/">http://xmlns.com/foaf/spec/</a><br/>
+        </dd>
+        <dt>Ontology RDF</dt>
+        <dd><a href="irg.ttl">RDF (turtle)</a></dd>
+    </dl>
+    <h2>Description</h2>
+    <div id="description">
+        <p>This ontology is a specialisation of the <a href="http://purl.org/linked-data/registry">Registry Ontology</a> (REG) used to manage Internationalized Resource Identifiers (IRIs). "IRI" is a generalised and more modern name for URIs - Uniform Resource Identifiers.</p>
+<p>The major specialisation in this ontology is the subclassing of reg:RegisterItem to <code>irg:RegisteredIRI</code> which just mandates the use of a few extra properties for IRI management.</p>
+<p>Another difference between this ontology and REG is not IRI-specific but a general development: here we define the statuses of <code>reg:RegisterItem</code> instances to be held within temporal objects, <code>irg:StatusPeriod</code> instances, sub classes of OWL TIME's <code>time:ProperInterval</code> allowing us to stack up multiple, time-bounded, statuses per <code>irg:RegisteredIRI</code>.</p>
+    </div>
+</section>
+<section id="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#objectproperties">Object Properties</a></li>
+        <li><a href="#datatypeproperties">Datatype Properties</a></li>
+        <li><a href="#annotationproperties">Annotation Properties</a></li>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#legend">Legend</a></li>
+    </ol>
+</section>
+<!--
+<section id="overview">
+    <h2>Overview</h2>
+    <div class="figure">
+        <div style="width:500px; height:50px; background-color: lightgrey; border:solid 2px grey; padding:10px;margin-bottom:5px; text-align:center;">Pictures say 1,000 words</div>
+        <div class="caption"><strong>Figure 1:</strong> Ontology overview</div>
+    </div>
+</section>
+-->
+  <section id="classes">
+    <h2>Classes <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#IRIRedirectTestCase">IRI Redirect Test Case</a></li>
+        <li><a href="#IRIRegister">IRI Register</a></li>
+        <li><a href="#IRIResourceType">IRI Resource Type</a></li>
+        <li><a href="#IRISubmitter">IRI Submitter</a></li>
+        <li><a href="#IRISubmmitter">IRI Submmitter</a></li>
+        <li><a href="#RegisteredIRI">Registered IRI</a></li>
+        <li><a href="#StatusPeriod">Status Period</a></li>
+    </ul>
+    <div class="entity class" id="IRISubmmitter">
+        <h3>IRI Submmitter<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#IRIOwner</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>An IRI Owner is an Organisation that is requesting, or has requested, an IRI allocation within the IRI Registry.</p>
+<p>IRI Owners need to have a specific person play the role of Submitter to actually make the submission.</p>
+<p>The rules governing eligibility of Organisations to be IRI Owners for the 'AGLDWG IRI Register' are described in the AGLDWG's Guidelines document, see <a href="https://linked.data.gov.au/guidelines">https://linked.data.gov.au/guidelines</a>.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://xmlns.com/foaf/0.1/Organization">http://xmlns.com/foaf/0.1/Organization</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="#actsfor">irg:actsFor</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="#hasIRIsubmitter">irg:hasIriSubmitter</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="IRIRedirectTestCase">
+        <h3>IRI Redirect Test Case<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#IRIRedirectTestCase</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>An IRI Redirect Test Case is an object used to contain the inputs and outputs needed to test the functioning of IRI redirects.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.w3.org/2002/07/owl#Thing">owl:Thing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="#HTTPResponseHeaders">irg:hasHttpResponseHeaders</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="#toIRI">irg:toIRI</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="#fromIRI">irg:fromIRI</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="#HTTPRequestHeaders">irg:hasHttpReqestHeaders</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="IRIRegister">
+        <h3>IRI Register<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#IRIRegister</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>An IRI Register is a Registry Ontology Register used to manage IRIs. For this reason, it has restrictions (requirements) on several properties not present in the Registry Ontology needed to manage IRIs.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://purl.org/linked-data/registry#Register">reg:Register</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="IRIResourceType">
+        <h3>IRI Resource Type<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#IRIResourceType</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>An IRI Resource Type is a type of Resource for which a Registered IRI can be allocated.</p>
+<p>Examples of IRI Resource Types include: Definitional Item, Dataset, Top-level Register, Second-level Register</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.w3.org/2004/02/skos/core#Concept">skos:Concept</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="#IRIresourcetype">irg:hasIriResourceType</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="IRISubmitter">
+        <h3>IRI Submitter<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#IRISubmitter</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>An IRI Submitter is a Person that requests an IRI to be allocated within an IRI Registry and does so on behalf of an IRI Owner, which is an Organisation entitled to have IRIs allocated.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://xmlns.com/foaf/0.1/Person">http://xmlns.com/foaf/0.1/Person</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="#actsfor">irg:actsFor</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="RegisteredIRI">
+        <h3>Registered IRI<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#RegisteredIRI</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A Registered Item that is for an IRI.</p>
+<p>It is expected that only IRIs are registered using this class and that the IRI registered is indicated using the property irg:forIRI.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://purl.org/linked-data/registry#RegisterItem">reg:RegisterItem</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Restrictions</th>
+                <td>
+                    <a href="#hasIRIredirectcode">irg:hasIriRedirectCode</a><sup class="sup-ap" title="annotation property">ap</sup> <span class="cardinality">exactly</span> 1<br/>
+                    <a href="#IRIresourcetype">irg:hasIriResourceType</a><sup class="sup-op" title="object property">op</sup> <span class="cardinality">exactly</span> 1<br/>
+                    <a href="#forIRI">irg:forIRI</a><sup class="sup-ap" title="annotation property">ap</sup> <span class="cardinality">exactly</span> 1<br/>
+                    <a href="#hasIRIsubmitter">irg:hasIriSubmitter</a><sup class="sup-op" title="object property">op</sup> <span class="cardinality">exactly</span> 1<br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="#hasstatusperiod">irg:hasStatusPeriod</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="#IRIresourcetype">irg:hasIriResourceType</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="#forIRI">irg:forIRI</a><sup class="sup-ap" title="annotation property">ap</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="StatusPeriod">
+        <h3>Status Period<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#StatusPeriod</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A period of time - a time:ProperInterval - during which something has a particular status</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.w3.org/2006/time#ProperInterval">time:ProperInterval</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Restrictions</th>
+                <td>
+                    <a href="#hasstatus">irg:hasStatus</a><sup class="sup-ap" title="annotation property">ap</sup> <span class="cardinality">exactly</span> 1<br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="#hasstatusperiod">irg:hasStatusPeriod</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+<section id="objectproperties">
+    <h2>Object Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#actsfor">acts for</a></li>
+        <li><a href="#IRIresourcetype">IRI resource type</a></li>
+        <li><a href="#hasIRIsubmitter">has IRI submitter</a></li>
+        <li><a href="#hasstatusperiod">has status period</a></li>
+    </ul>
+    <div class="entity property" id="actsfor">
+        <h3>acts for<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#actsFor</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property is used to indicate the Government Organisation that an IRI Submitter is requesting IRI allocations for.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#IRISubmitter">irg:IRISubmitter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="#IRISubmmitter">irg:IRIOwner</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="IRIresourcetype">
+        <h3>IRI resource type<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasIriResourceType</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates one of the IRI Resource Types, listed within this ontology, that a RegisteredIRI is allocated for.
+                </td>
+            </tr>
+            <tr>
+                <th>Super-properties</th>
+                <td>
+                    <a href="http://purl.org/dc/terms/type">dcterms:type</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#RegisteredIRI">irg:RegisteredIRI</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="#IRIResourceType">irg:IRIResourceType</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasIRIsubmitter">
+        <h3>has IRI submitter<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasIriSubmitter</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates an IRI Submitter Agent that is or has requested IRIs within the AGLDWG IRI Register.
+                </td>
+            </tr>
+            <tr>
+                <th>Super-properties</th>
+                <td>
+                    <a href="http://purl.org/linked-data/registry#submitter">reg:submitter</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="#IRISubmmitter">irg:IRIOwner</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasstatusperiod">
+        <h3>has status period<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasStatusPeriod</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates a time Status Period, which is a specialised form of time:ProperInterval, that conveys a time-bound status of a Registry Item.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#RegisteredIRI">irg:RegisteredIRI</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="#StatusPeriod">irg:StatusPeriod</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<section id="datatypeproperties">
+    <h2>Datatype Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#fromIRI">from IRI</a></li>
+        <li><a href="#HTTPRequestHeaders">HTTP Request Headers</a></li>
+        <li><a href="#HTTPResponseHeaders">HTTP Response Headers</a></li>
+        <li><a href="#toIRI">to IRI</a></li>
+    </ul>
+    <div class="entity property" id="fromIRI">
+        <h3>from IRI<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#fromIRI</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates the input/source IRI that a test case redirect from, to some other IRI.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#IRIRedirectTestCase">irg:IRIRedirectTestCase</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="HTTPRequestHeaders">
+        <h3>HTTP Request Headers<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasHttpReqestHeaders</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates any HTTP headers that need to be submitted with the HTTP request to trigger the redirect being testedby this Test Case.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#IRIRedirectTestCase">irg:IRIRedirectTestCase</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="HTTPResponseHeaders">
+        <h3>HTTP Response Headers<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasHttpResponseHeaders</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates any HTTP headers that need to be returned by the redirect service for a successful result in the testing of this Test Case.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#IRIRedirectTestCase">irg:IRIRedirectTestCase</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="toIRI">
+        <h3>to IRI<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#toIRI</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates the output/destination IRI that a Test Case redirect to, from some other IRI.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#IRIRedirectTestCase">irg:IRIRedirectTestCase</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<section id="annotationproperties">
+    <h2>Annotation Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#forIRI">for IRI</a></li>
+        <li><a href="#hasIRIredirectcode">has IRI redirect code</a></li>
+        <li><a href="#hasstatus">has status</a></li>
+    </ul>
+    <div class="entity property" id="forIRI">
+        <h3>for IRI<sup title="annotation property" class="sup-ap">ap</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#forIRI</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates the thing for which the Registered IRI instance has been created - the IRI that is registered.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="#RegisteredIRI">irg:RegisteredIRI</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasIRIredirectcode">
+        <h3>has IRI redirect code<sup title="annotation property" class="sup-ap">ap</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasIriRedirectCode</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates the code used to redirect the registered IRI to the functional data or system IRIs.
+
+Expected values for this property are XSD strings that contain Apache2 mod_rewrite, nginx or similar code.
+                </td>
+            </tr>
+            <tr>
+                <th>Example</th>
+                <td>
+                    <pre>
+                      # IRI for the AGRIF Ontology, http://linked.data.gov.au/def/agrif
+# Apache mod_rewrite
+RewriteCond %{QUERY_STRING} ^_format=text/turtle$ [OR]
+RewriteCond %{HTTP:Accept} text/turtle [NC]
+RewriteRule ^/def/agrif(.*)$        https://raw.githack.com/agldwg/agrif-ont/master/agrif.ttl? [R=302,L]
+RewriteRule ^/def/agrif(.*).ttl$    https://raw.githack.com/agldwg/agrif-ont/master/agrif.ttl [R=302,L]
+RewriteRule ^/def/agrif(.*)$        https://raw.githack.com/agldwg/agrif-ont/master/agrif.html$1 [R=302,L]
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasstatus">
+        <h3>has status<sup title="annotation property" class="sup-ap">ap</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>https://linked.data.gov.au/def/irg#hasStatus</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    This property indicates the status held by a Registered IRI within a given period of time, a Status Period.
+
+This property is effectively a sub property of reg:statusb but cannot be so formally due to missmatched domain/range entailments.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2006/time#ProperInterval">time:ProperInterval</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://purl.org/linked-data/registry#Status">reg:Status</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+  
+  <section id="namedindividuals">
+    <h2>Named Individuals <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+    </ul>
+</section>
+  
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>dcterms</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>irg</dt>
+        <dd><code>https://linked.data.gov.au/def/irg#</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov#</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>reg</dt>
+        <dd><code>http://purl.org/linked-data/registry#</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>time</dt>
+        <dd><code>http://www.w3.org/2006/time#</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+  <section id="legend">
+      <h2>Legend</h2>
+      <table class="entity">
+          <tr><td><sup class="sup-c" title="Classes">c</sup></td><td>Classes</td></tr>
+          <tr><td><sup class="sup-op" title="Object Properties">op</sup></td><td>Object Properties</td></tr>
+          <tr><td><sup class="sup-fp" title="Functional Properties">fp</sup></td><td>Functional Properties</td></tr>
+          <tr><td><sup class="sup-dp" title="Data Properties">dp</sup></td><td>Data Properties</td></tr>
+          <tr><td><sup class="sup-ap" title="Annotation Properties">dp</sup></td><td>Annotation Properties</td></tr>
+          <tr><td><sup class="sup-p" title="Properties">p</sup></td><td>Properties</td></tr>
+          <tr><td><sup class="sup-ni" title="Named Individuals">ni</sup></td><td>Named Individuals</td></tr>
+      </table>
+  </section>
+</body>
+</html>
