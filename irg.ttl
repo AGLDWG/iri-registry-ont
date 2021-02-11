@@ -196,8 +196,8 @@ irg:hasStatus
   a owl:AnnotationProperty ;
   rdfs:comment """This property indicates the status held by a Registered IRI within a given period of time, a Status Period.
 
-This property is effectively a sub property of reg:statusb but cannot be so formally due to missmatched domain/range entailments."""@en ;
-  rdfs:domain time:ProperInterval ;
+This property is effectively a sub property of reg:status but cannot be so formally due to missmatched domain/range entailments."""@en ;
+  rdfs:domain time:StatusPeriod ;
   rdfs:label "has status" ;
   rdfs:range reg:Status ;
 .
