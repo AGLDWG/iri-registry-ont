@@ -11,7 +11,7 @@ The ontology is constituted as an OWL2 ontology and stored as an RDF (turtle) fi
 
 The ontology is documented in HTML, see the `irg.html` file for the source or this rendered version:
 
-* <https://raw.githack.com/AGLDWG/iri-registry-ont/master/irg.ttl>
+* <https://raw.githack.com/AGLDWG/iri-registry-ont/master/irg.html>
 
 
 ## Examples
