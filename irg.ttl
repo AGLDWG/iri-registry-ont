@@ -37,7 +37,7 @@ irg:IRIOwner
 IRI Owners need to have a specific person play the role of Submitter to actually make the submission.
 
 The rules governing eligibility of Organisations to be IRI Owners for the 'AGLDWG IRI Register' are described in the AGLDWG's Guidelines document, see <https://linked.data.gov.au/guidelines>."""@en ;
-  rdfs:label "IRI Submmitter" ;
+  rdfs:label "IRI Owner" ;
   rdfs:subClassOf <http://xmlns.com/foaf/0.1/Organization> ;
 .
 irg:IRIRedirectTestCase
