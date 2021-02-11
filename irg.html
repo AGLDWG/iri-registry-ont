@@ -227,7 +227,7 @@
             <a href="http://xmlns.com/foaf/spec/">http://xmlns.com/foaf/spec/</a><br/>
         </dd>
         <dt>Ontology RDF</dt>
-        <dd><a href="irg.ttl">RDF (turtle)</a></dd>
+        <dd><a href="data_file.ttl">RDF (turtle)</a></dd>
     </dl>
     <h2>Description</h2>
     <div id="description">
@@ -247,27 +247,25 @@
         <li><a href="#legend">Legend</a></li>
     </ol>
 </section>
-<!--
 <section id="overview">
     <h2>Overview</h2>
     <div class="figure">
-        <div style="width:500px; height:50px; background-color: lightgrey; border:solid 2px grey; padding:10px;margin-bottom:5px; text-align:center;">Pictures say 1,000 words</div>
+        <a href="irg.png"></a><img src="irg.png" style="width:800px;"></a>
         <div class="caption"><strong>Figure 1:</strong> Ontology overview</div>
     </div>
 </section>
--->
   <section id="classes">
     <h2>Classes <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
     <ul class="hlist">
+        <li><a href="#IRIOwner">IRI Owner</a></li>
         <li><a href="#IRIRedirectTestCase">IRI Redirect Test Case</a></li>
         <li><a href="#IRIRegister">IRI Register</a></li>
         <li><a href="#IRIResourceType">IRI Resource Type</a></li>
         <li><a href="#IRISubmitter">IRI Submitter</a></li>
-        <li><a href="#IRIOwner">IRI Owner</a></li>
         <li><a href="#RegisteredIRI">Registered IRI</a></li>
         <li><a href="#StatusPeriod">Status Period</a></li>
     </ul>
-    <div class="entity class" id="IRISubmitter">
+    <div class="entity class" id="IRIOwner">
         <h3>IRI Owner<sup title="class" class="sup-c">c</sup></h3>
         <table>
             <tr>
@@ -291,8 +289,8 @@
             <tr>
                 <th>In range of</th>
                 <td>
-                    <a href="#actsfor">irg:actsFor</a><sup class="sup-op" title="object property">op</sup><br/>
                     <a href="#hasIRIsubmitter">irg:hasIriSubmitter</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="#actsfor">irg:actsFor</a><sup class="sup-op" title="object property">op</sup><br/>
                 </td>
             </tr>
         </table>
@@ -319,10 +317,10 @@
             <tr>
                 <th>In domain of</th>
                 <td>
-                    <a href="#HTTPResponseHeaders">irg:hasHttpResponseHeaders</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
                     <a href="#toIRI">irg:toIRI</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
-                    <a href="#fromIRI">irg:fromIRI</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
                     <a href="#HTTPRequestHeaders">irg:hasHttpReqestHeaders</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="#HTTPResponseHeaders">irg:hasHttpResponseHeaders</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="#fromIRI">irg:fromIRI</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
                 </td>
             </tr>
         </table>
@@ -426,18 +424,18 @@
             <tr>
                 <th>Restrictions</th>
                 <td>
-                    <a href="#hasIRIredirectcode">irg:hasIriRedirectCode</a><sup class="sup-ap" title="annotation property">ap</sup> <span class="cardinality">exactly</span> 1<br/>
-                    <a href="#IRIresourcetype">irg:hasIriResourceType</a><sup class="sup-op" title="object property">op</sup> <span class="cardinality">exactly</span> 1<br/>
                     <a href="#forIRI">irg:forIRI</a><sup class="sup-ap" title="annotation property">ap</sup> <span class="cardinality">exactly</span> 1<br/>
+                    <a href="#IRIresourcetype">irg:hasIriResourceType</a><sup class="sup-op" title="object property">op</sup> <span class="cardinality">exactly</span> 1<br/>
+                    <a href="#hasIRIredirectcode">irg:hasIriRedirectCode</a><sup class="sup-ap" title="annotation property">ap</sup> <span class="cardinality">exactly</span> 1<br/>
                     <a href="#hasIRIsubmitter">irg:hasIriSubmitter</a><sup class="sup-op" title="object property">op</sup> <span class="cardinality">exactly</span> 1<br/>
                 </td>
             </tr>
             <tr>
                 <th>In domain of</th>
                 <td>
+                    <a href="#forIRI">irg:forIRI</a><sup class="sup-ap" title="annotation property">ap</sup><br/>
                     <a href="#hasstatusperiod">irg:hasStatusPeriod</a><sup class="sup-op" title="object property">op</sup><br/>
                     <a href="#IRIresourcetype">irg:hasIriResourceType</a><sup class="sup-op" title="object property">op</sup><br/>
-                    <a href="#forIRI">irg:forIRI</a><sup class="sup-ap" title="annotation property">ap</sup><br/>
                 </td>
             </tr>
         </table>
@@ -506,7 +504,7 @@
             <tr>
                 <th>Range(s)</th>
                 <td>
-                    <a href="#IRISubmmitter">irg:IRIOwner</a><sup class="sup-c" title="class">c</sup>
+                    <a href="#IRIOwner">irg:IRIOwner</a><sup class="sup-c" title="class">c</sup>
                 </td>
             </tr>
         </table>
@@ -566,7 +564,7 @@
             <tr>
                 <th>Range(s)</th>
                 <td>
-                    <a href="#IRISubmmitter">irg:IRIOwner</a><sup class="sup-c" title="class">c</sup>
+                    <a href="#IRIOwner">irg:IRIOwner</a><sup class="sup-c" title="class">c</sup>
                 </td>
             </tr>
         </table>
@@ -801,13 +799,13 @@ RewriteRule ^/def/agrif(.*)$        https://raw.githack.com/agldwg/agrif-ont/mas
                 <td>
                     This property indicates the status held by a Registered IRI within a given period of time, a Status Period.
 
-This property is effectively a sub property of <code>reg:status</code> but cannot be so formally due to missmatched domain/range entailments.
+This property is effectively a sub property of reg:status but cannot be so formally due to missmatched domain/range entailments.
                 </td>
             </tr>
             <tr>
                 <th>Domain(s)</th>
                 <td>
-                    <a href="#StatusPeriod">Status Period</a><sup class="sup-c" title="class">c</sup>
+                    <a href="http://www.w3.org/2006/time#StatusPeriod">time:StatusPeriod</a><sup class="sup-c" title="class">c</sup>
                 </td>
             </tr>
             <tr>

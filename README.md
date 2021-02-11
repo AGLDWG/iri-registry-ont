@@ -1,4 +1,7 @@
 # IRI Registry Ontology
+
+<img src="irg.png" style="width:800px;" /><br />
+
 This ontology is a specialisation of the [Registry Ontology](http://purl.org/linked-data/registry) (REG) used to manage Internationalized Resource Identifiers (IRIs). "IRI" is a generalised and more modern name for URIs - Uniform Resource Identifiers.
 
 The major specialisation in this ontology is the subclassing of reg:RegisterItem to `irireg:RegisteredIRI` which just mandates the use of a few extra properties for IRI management.
