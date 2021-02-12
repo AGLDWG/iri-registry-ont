@@ -94,17 +94,11 @@ It is expected that only IRIs are registered using this class and that the IRI r
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty irg:hasIriSubmitter ;
     ] ;
-.
-irg:StatusPeriod
-  a owl:Class ;
-  rdfs:comment "A period of time - a time:ProperInterval - during which something has a particular status"@en ;
-  rdfs:label "Status Period" ;
-  rdfs:subClassOf time:ProperInterval ;
   rdfs:subClassOf [
-      a owl:Restriction ;
+      a owl:Restriction ;      
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty irg:hasStatus ;
-    ] ;
+      owl:onProperty reg:owner; 
+  ];
 .
 irg:actsFor
   a owl:ObjectProperty ;
@@ -191,22 +185,6 @@ irg:hasIriSubmitter
   rdfs:label "has IRI submitter" ;
   rdfs:range irg:IRIOwner ;
   rdfs:subPropertyOf reg:submitter ;
-.
-irg:hasStatus
-  a owl:AnnotationProperty ;
-  rdfs:comment """This property indicates the status held by a Registered IRI within a given period of time, a Status Period.
-
-This property is effectively a sub property of reg:status but cannot be so formally due to missmatched domain/range entailments."""@en ;
-  rdfs:domain time:StatusPeriod ;
-  rdfs:label "has status" ;
-  rdfs:range reg:Status ;
-.
-irg:hasStatusPeriod
-  a owl:ObjectProperty ;
-  rdfs:comment "This property indicates a time Status Period, which is a specialised form of time:ProperInterval, that conveys a time-bound status of a Registry Item."@en ;
-  rdfs:domain irg:RegisteredIRI ;
-  rdfs:label "has status period" ;
-  rdfs:range irg:StatusPeriod ;
 .
 irg:secondLevelRegister
   a irg:IRIResourceType ;

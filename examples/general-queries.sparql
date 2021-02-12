@@ -1,0 +1,60 @@
+# Get the current version of the IRI Registered Item for "https://linked.data.gov.au/def/agrif"
+#   - it is the version that has no dcterms:isReplacedBy property
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX irg: <https://linked.data.gov.au/def/irireg#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?item ?forIRI
+WHERE {
+  ?item   a irg:RegisteredIRI ;
+          irg:forIRI ?forIRI .
+    
+  FILTER (?forIRI = "https://linked.data.gov.au/def/agrif"^^xsd:anyURI)
+  FILTER NOT EXISTS { ?item dcterms:isReplacedBy ?x }
+}
+
+# Results:
+#
+# 1, <https://linked.data.gov.au/dataset/agldwg-rir-register/node/2421>, "https://linked.data.gov.au/def/agrif"^^xsd:anyURI
+
+
+# Get the time-ordered sequence fo statuses the IRI Registered Item for "https://linked.data.gov.au/def/agrif"
+#   - this can be used for checking valid status progression
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX irg: <https://linked.data.gov.au/def/irireg#>
+PREFIX reg: <http://purl.org/linked-data/registry#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX version: <http://purl.org/linked-data/version#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?item ?status ?beginning ?end
+WHERE {
+  ?item   a irg:RegisteredIRI ;
+          irg:forIRI ?forIRI ;
+          reg:status ?status .
+
+  OPTIONAL {  
+    ?item version:interval [
+            time:hasBeginning [
+    		      time:inXSDDateTime ?beginning ;
+  			  ] 
+    ]
+  }
+  OPTIONAL {  
+    ?item version:interval [
+            time:hasEnd [
+    		      time:inXSDDateTime ?end ;
+  			  ] 
+    ]
+  }
+    
+  FILTER (?forIRI = "https://linked.data.gov.au/def/agrif"^^xsd:anyURI)
+}
+ORDER BY ?beginning ?end
+
+# Results form agrif.ttl:
+#
+# 1, <https://linked.data.gov.au/dataset/agldwg-rir-register/node/2276>, reg:accepted, "2018-07-15"^^xsd:date, "2018-07-15"^^xsd:date
+# 2, <https://linked.data.gov.au/dataset/agldwg-rir-register/node/2279>, reg:stable, "2018-07-15"^^xsd:date, "2020-01-17"^^xsd:date
+# 3, <https://linked.data.gov.au/dataset/agldwg-rir-register/node/1234>, reg:submitted, "2018-7-01"^^xsd:date, "2018-07-14"^^xsd:date
+# 4, <https://linked.data.gov.au/dataset/agldwg-rir-register/node/2421>, reg:stable, "2020-01-17"^^xsd:date, 
