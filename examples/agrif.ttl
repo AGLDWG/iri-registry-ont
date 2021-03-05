@@ -57,7 +57,7 @@ agldwgregn:1234
 	] ;
 	version:interval [
         time:hasBeginning [
-            time:inXSDDateTime "2018-7-01"^^xsd:date ;
+            time:inXSDDateTime "2018-07-01"^^xsd:date ;
         ] ;
         time:hasEnd [
             time:inXSDDateTime "2018-07-14"^^xsd:date ;
